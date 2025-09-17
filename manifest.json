@@ -6,12 +6,15 @@
     "default_icon": "icon.png",
     "default_popup": "index.html"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "scripting", "activeTab"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["src/content.jsx"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "src/background.jsx"
+  }
 }
