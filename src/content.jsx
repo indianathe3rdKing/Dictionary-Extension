@@ -1,3 +1,6 @@
+const { useState } = require("react");
+const { default: SearchAccordion } = require("./components/search-accordion");
+
 // Add Font Awesome CDN if not already added
 if (!document.querySelector('link[href*="font-awesome"]')) {
   const faLink = document.createElement("link");
@@ -22,6 +25,7 @@ let mouseY = 0;
 const letterRegex = /^[A-Za-z]+$/;
 const spaceRegex = /\s/;
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+
 let parsedData = null;
 // Track mouse position
 document.addEventListener("mousemove", (e) => {
@@ -69,8 +73,6 @@ async function aiDefinition(word) {
     } catch (error) {
       console.error("Could'nt parse JSON:", error);
     }
-
-    console.log("AI Definition:", parsed);
     showPopup(word, parsed.definition, parsed);
   } catch (error) {
     console.error("AI Definition error:", error);
