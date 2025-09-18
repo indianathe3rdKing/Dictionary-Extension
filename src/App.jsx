@@ -1,11 +1,17 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+
 import "./App.css";
+import { Button } from "./components/ui/button";
+import Nav from "./components/Nav";
+import SearchAccordion from "./components/search-accordion";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
+  return (
+    <div className="w-3xs rounded-b-md h-full ">
+      <Nav />
+      <SearchAccordion />
+    </div>
+  );
 }
 
 export default App;

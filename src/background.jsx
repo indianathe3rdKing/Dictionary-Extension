@@ -10,7 +10,10 @@ chrome.action.onClicked.addListener((tab) => {
       },
       (injectionResults) => {
         if (chrome.runtime.lastError) {
-          console.error("Failed to inject content script:", chrome.runtime.lastError);
+          console.error(
+            "Failed to inject content script:",
+            chrome.runtime.lastError
+          );
         } else {
           console.log("Content script injected", injectionResults);
         }

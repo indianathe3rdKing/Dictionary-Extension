@@ -206,7 +206,7 @@ function showPopup(word, definitionTexts) {
   }
 
   const modalHtml = `
-    <div id="definitionPopup" style="position: fixed; top: ${popupY}px; left: ${popupX}px; background: #fff; color: #222; border: none; padding: 0; z-index: 10000; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 24px; max-width: 420px; font-family: 'Titillium Web', Arial, sans-serif; line-height: 1.4;">
+    <div id="definitionPopup" style="position: fixed; top: ${popupY}px; left: ${popupX}px; background: #fff; color: #222; border: none; padding: 0; z-index: 10000; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 14px; max-width: 420px; font-family: 'Titillium Web', Arial, sans-serif; line-height: 1.4;">
       <div style="position: relative; padding: 32px 32px 24px 32px;">
         <span style="position: absolute; top: 24px; right: 24px; cursor: pointer; font-size: 24px; color: #222;" onclick="document.getElementById('definitionPopup').remove()" title="Close">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18" stroke="#222" stroke-width="2" stroke-linecap="round"/><path d="M6 6L18 18" stroke="#222" stroke-width="2" stroke-linecap="round"/></svg>
