@@ -27,7 +27,7 @@ const navigationLinks = [
   { href: "#", label: "About" },
 ];
 
-export default function Nav() {
+export default function Nav({ onWordSearch }) {
   const id = useId();
 
   return (
@@ -38,7 +38,7 @@ export default function Nav() {
         {/* Middle area */}
         <div className="grow">
           {/* Search form */}
-          <SearchBar />
+          <SearchBar onchange={onWordSearch} />
         </div>
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-2">

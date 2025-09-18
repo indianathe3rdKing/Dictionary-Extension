@@ -7,12 +7,12 @@ import {
   AccordionItem,
 } from "@/components/ui/accordion";
 
-export default function SearchAccordion({ parsedData }) {
+export default function SearchAccordion({ result }) {
   const items = [
     {
       id: "1",
       title: "Word",
-      content: parsedData || "No definition to give.",
+      content: result?.definition || "No definition to give.",
     },
     {
       id: "2",
