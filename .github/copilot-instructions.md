@@ -19,7 +19,7 @@ Key files and what they mean
 - `package.json` — scripts: `npm run dev` (vite), `npm run build` (vite build). Use these for local development or packaging.
 - `src/background.jsx` — background/service worker. Keep it free of `document`/`window`. Use `chrome.scripting.executeScript({ target, files }, callback)` to inject content scripts.
 - `src/content.jsx` — content script: handles selection, fetches definitions (Merriam-Webster fallback), calls OpenAI via `import.meta.env.VITE_OPENAI_API_KEY`, and renders popups in-page.
-- `src/components/ui/*` — UI primitives (e.g., `Input`, `Button`) using Tailwind utilities and `cn` helper from `src/lib/utils.js`.
+- `src/components/ui/*` — UI primitives (shadcn-style) (e.g., `Input`, `Button`) using Tailwind utilities and the `cn` helper from `src/lib/utils.js` plus `tailwind-merge` for class merging.
 - `src/App.css` and `src/index.css` — global styles, Tailwind theme variables, and custom CSS variables (e.g., `--border`, `--input`). These control colors used by `border-input`, `border-border`, etc.
 
 Developer workflows (how to run, debug, build)
@@ -43,9 +43,9 @@ Debugging notes (extension-specific)
 
 Project-specific patterns & conventions
 
-- UI primitives: `src/components/ui/*` hold reusable components. `Input` uses a `cn(...)` helper (from `src/lib/utils.js`) that merges `clsx` + `tailwind-merge`.
-- Tailwind + CSS variables: `src/App.css` defines theme tokens like `--border`, `--input` and applies `@apply border-border` globally. Prefer adding explicit Tailwind color utilities (e.g., `border-gray-700`) when a visible border must be forced in both light/dark themes.
-- Content injection: `background.jsx` injects the content script using `chrome.scripting.executeScript({ target: { tabId }, files: ['src/content.jsx'] })`. Ensure `files` refers to a real file in the extension package after build.
+- UI primitives: `src/components/ui/*` hold reusable components. The project follows the shadcn-style primitives pattern: small, composable components styled with Tailwind utility classes. The `cn(...)` helper in `src/lib/utils.js` merges `clsx` and `tailwind-merge` to deduplicate and resolve conflicting Tailwind classes.
+- Tailwind + CSS variables: `src/App.css` defines theme tokens like `--border`, `--input` and applies `@apply border-border` globally. When you need a visibly consistent border across themes prefer explicit utilities (e.g., `border-gray-700` or `border-[color:var(--color-border)]`).
+- Content injection: `src/background.jsx` injects the content script using `chrome.scripting.executeScript({ target: { tabId }, files: ['src/content.jsx'] })`. After building with `@crxjs/vite-plugin` verify the built `manifest.json` in `dist/` points to real files.
 - Environment variables: OpenAI key is read with `import.meta.env.VITE_OPENAI_API_KEY` in `src/content.jsx`. Use `.env` files and Vite conventions when running locally.
 
 Integration points & external dependencies
@@ -75,6 +75,11 @@ What AI agents should avoid changing without user confirmation
 - `manifest.json` entries that alter permissions or host permissions.
 - `vite.config.js` unless fixing build/chunking issues — changing the CRX plugin options can break packaging.
 - API keys or endpoints embedded in code — these are deliberate and sensitive.
+
+Notes about Chakra removal
+
+- This repository previously included Chakra UI and Emotion. The app now uses Tailwind + shadcn-style UI primitives. Avoid re-adding `@chakra-ui/*`, `@emotion/*`, or `framer-motion` unless you intentionally migrate parts of the UI back to those libraries.
+- After dependencies are removed from `package.json`, run `npm prune` and reinstall (`npm install`) or delete `node_modules` + `package-lock.json` and run `npm install` to ensure lockfile cleanup.
 
 Useful commands & quick references
 

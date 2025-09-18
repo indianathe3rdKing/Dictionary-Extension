@@ -7,7 +7,7 @@ import SearchAccordion from "./components/search-accordion";
 
 function App() {
   return (
-    <div className="w-3xs rounded-b-md h-full ">
+    <div className="w-2xl rounded-b-md h-full ">
       <Nav />
       <SearchAccordion />
     </div>
