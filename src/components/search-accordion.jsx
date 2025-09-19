@@ -11,27 +11,70 @@ export default function SearchAccordion({ result }) {
   const items = [
     {
       id: "1",
-      title: "Word",
-      content: result?.definition || "No definition to give.",
+      title: (
+        <h2 className="uppercase text-2xl font-bold">
+          {result?.word || <PropagateLoader color="#9ca1be" />}
+        </h2>
+      ),
+      content: (
+        <div className="space-y-3">
+          {/* Part of Speech */}
+          {result?.partOfSpeech && (
+            <p className="text-sm font-medium italic text-muted-foreground">
+              {Array.isArray(result.partOfSpeech)
+                ? result.partOfSpeech.join(", ")
+                : result.partOfSpeech}
+            </p>
+          )}
+
+          {/* Definition(s) */}
+          <div>
+            {result?.definition ? (
+              Array.isArray(result.definition) ? (
+                <ol className="list-decimal list-inside space-y-1">
+                  {result.definition.map((def, index) => (
+                    <li key={index} className="text-foreground">
+                      {def}
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-foreground">{result.definition}</p>
+              )
+            ) : (
+              <p className="text-muted-foreground">No definition to give.</p>
+            )}
+          </div>
+
+          {/* Example */}
+          {result?.example && (
+            <div className="bg-muted/30 p-3 rounded-md border-l-4 border-primary/30">
+              <p className="italic text-foreground">"{result.example}"</p>
+            </div>
+          )}
+
+          {/* Synonyms */}
+          {result?.synonyms && (
+            <div>
+              <span className="text-sm font-medium text-muted-foreground">
+                Synonyms:{" "}
+              </span>
+              <span className="text-foreground">
+                {Array.isArray(result.synonyms)
+                  ? result.synonyms.join(", ")
+                  : result.synonyms}
+              </span>
+            </div>
+          )}
+        </div>
+      ),
     },
-    {
-      id: "2",
-      title: "How can I customize the components?",
-      content:
-        "Use our CSS variables for global styling, or className and style props for component-specific changes. We support CSS modules, Tailwind, and dark mode out of the box.",
-    },
-    {
-      id: "3",
-      title: "Is Origin UI optimized for performance?",
-      content:
-        "Yes, with tree-shaking, code splitting, and minimal runtime overhead. Most components are under 5KB gzipped.",
-    },
-    {
-      id: "4",
-      title: "How accessible are the components?",
-      content:
-        "All components follow WAI-ARIA standards, featuring proper ARIA attributes, keyboard navigation, and screen reader support. Regular testing ensures compatibility with NVDA, VoiceOver, and JAWS.",
-    },
+    // {
+    //   id: "2",
+    //   title: "How can I customize the components?",
+    //   content:
+    //     "Use our CSS variables for global styling, or className and style props for component-specific changes. We support CSS modules, Tailwind, and dark mode out of the box.",
+    // },
   ];
   return (
     <div className="space-y-4">

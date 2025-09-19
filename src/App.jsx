@@ -9,7 +9,7 @@ import SearchBar from "./components/search-bar";
 function App() {
   const [searchResults, setSearchResults] = useState(null);
   return (
-    <div className="w-2xl rounded-b-md h-full ">
+    <div className="w-lg rounded-b-md h-full ">
       <Nav onWordSearch={setSearchResults} />
 
       <SearchAccordion result={searchResults} />

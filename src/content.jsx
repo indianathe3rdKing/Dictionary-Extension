@@ -1,5 +1,5 @@
-const { useState } = require("react");
-const { default: SearchAccordion } = require("./components/search-accordion");
+import { useState } from "react";
+import SearchAccordion from "./components/search-accordion";
 
 // Add Font Awesome CDN if not already added
 if (!document.querySelector('link[href*="font-awesome"]')) {

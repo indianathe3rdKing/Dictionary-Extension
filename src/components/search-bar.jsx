@@ -51,6 +51,7 @@ async function aiDefinition(word) {
         input: `Provide a concise definition or defintions if more that one is available(as well as the part of speech for each) for the word: ${word}.
         Return the result as a valid JSON with the following structure:
         {
+        word: "the searched word",
         partOfSpeech: ["part of speech"],
         definition: ["definition text"],
         example: "example sentence"(if available),
