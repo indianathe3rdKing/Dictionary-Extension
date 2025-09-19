@@ -13,7 +13,7 @@ export default function SearchAccordion({ result }) {
       id: "1",
       title: (
         <h2 className="uppercase text-2xl font-bold">
-          {result?.word || <PropagateLoader color="#9ca1be" />}
+          {result?.word || "Loading..."}
         </h2>
       ),
       content: (
