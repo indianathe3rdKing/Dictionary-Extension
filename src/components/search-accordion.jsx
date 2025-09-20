@@ -82,7 +82,7 @@ export default function SearchAccordion({ result }) {
         type="single"
         collapsible
         className="w-[90%] m-auto"
-        defaultValue="3"
+        defaultValue="1"
       >
         {items.map((item) => (
           <AccordionItem value={item.id} key={item.id} className="py-2">
