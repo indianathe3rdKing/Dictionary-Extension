@@ -1,18 +1,15 @@
-import { useState } from "react";
-
 import "./App.css";
-import { Button } from "./components/ui/button";
-import Nav from "./components/Nav";
-import SearchAccordion from "./components/search-accordion";
-import SearchBar from "./components/search-bar";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import Popup from "./pages/popup";
 
 function App() {
-  const [searchResults, setSearchResults] = useState(null);
   return (
     <div className="w-lg rounded-b-md h-full ">
-      <Nav onWordSearch={setSearchResults} />
-
-      <SearchAccordion result={searchResults} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Popup />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
