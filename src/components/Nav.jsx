@@ -18,12 +18,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import SearchBar from "./search-bar";
+import SignInButton from "./button";
+import { useNavigate } from "react-router-dom";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [{ href: "#", label: "Home", active: true }];
 
 export default function Nav({ onWordSearch }) {
   const id = useId();
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    console.log("Navigating to sign-in page...");
+    navigate("/signin");
+  };
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -38,7 +46,10 @@ export default function Nav({ onWordSearch }) {
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-2">
           {/* Notification */}
-          <NotificationMenu />
+
+          <Button onClick={handleSignIn} variant={"outline"}>
+            Sign in
+          </Button>
           {/* User menu */}
           <UserMenu />
         </div>
@@ -46,7 +57,7 @@ export default function Nav({ onWordSearch }) {
       {/* Bottom navigation */}
       <div className="border-t py-2 max-md:hidden">
         {/* Navigation menu */}
-        <NavigationMenu>
+        {/* <NavigationMenu>
           <NavigationMenuList className="gap-2">
             {navigationLinks.map((link, index) => (
               <NavigationMenuItem key={index}>
@@ -60,7 +71,7 @@ export default function Nav({ onWordSearch }) {
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu> */}
       </div>
     </header>
   );
