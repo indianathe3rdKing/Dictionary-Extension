@@ -1,6 +1,6 @@
-const { default: axios } = require("axios");
+import axios from "axios";
 
-const API_BASE_URL = "";
+const API_BASE_URL = "https://r1qrdf98db.execute-api.eu-north-1.amazonaws.com";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,7 +12,7 @@ const api = axios.create({
 export const userApi = {
   createUser: async (userData) => {
     try {
-      const response = await api.get("/users");
+      const response = await api.post("/users", userData);
       return response.data;
     } catch (error) {
       console.error("Error creating user:", error);

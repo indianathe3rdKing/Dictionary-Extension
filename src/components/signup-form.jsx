@@ -1,27 +1,42 @@
 "use client";
-import React, { createContext, useContext } from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGoogle } from "@tabler/icons-react";
+import { userApi } from "@/lib/api";
+import SubmitAlert from "./submit-alert";
 
-const UserContext = createContext(null);
-
-export const useUserContext = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useUserContext must be used within a UserProvider");
-  }
-  return context;
-};
+export const UserForm = () => {};
 
 export default function SignupForm() {
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+  const [showAlert, setShowAlert] = useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+    try {
+      setFormData({ name: "", email: "" });
+      await userApi.createUser(formData);
+      console.log("Form submitted:", formData);
+      setShowAlert(true);
+    } catch (error) {
+      console.error("Error during sign up:", error);
+    }
   };
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+      {showAlert && <SubmitAlert />}
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Create your account
       </h2>
@@ -31,17 +46,27 @@ export default function SignupForm() {
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
-            <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" />
-          </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" />
+            <Label htmlFor="fullname">Full name</Label>
+            <Input
+              id="fullname"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Durden"
+              type="text"
+            />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="projectmayhem@fc.com"
+            type="email"
+          />
         </LabelInputContainer>
         {/* <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
