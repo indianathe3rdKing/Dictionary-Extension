@@ -5,7 +5,9 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { userApi } from "@/lib/api";
-import SubmitAlert from "./submit-alert";
+import SubmitAlert from "../components/submit-alert";
+import { Link } from "react-router-dom";
+import login from "./login";
 
 export const UserForm = () => {};
 
@@ -13,6 +15,8 @@ export default function SignupForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    surnname: "",
+    password: "",
   });
   const [showAlert, setShowAlert] = useState(false);
   const handleChange = (e) => {
@@ -35,7 +39,7 @@ export default function SignupForm() {
     }
   };
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+    <div className="shadow-input mx-auto w-[80%] max-w-md overflow-y-hidden rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       {showAlert && <SubmitAlert />}
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Create your account
@@ -44,13 +48,24 @@ export default function SignupForm() {
         Log in if you don&apos;t have an account yet.
       </p>
       <form className="my-8" onSubmit={handleSubmit}>
-        <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+        <div className="mb-4 flex flex-col space-y-2 ">
           <LabelInputContainer>
-            <Label htmlFor="fullname">Full name</Label>
+            <Label htmlFor="name">Firstname</Label>
             <Input
-              id="fullname"
+              id="name"
               name="name"
               value={formData.name}
+              onChange={handleChange}
+              placeholder="Durden"
+              type="text"
+            />
+          </LabelInputContainer>
+          <LabelInputContainer>
+            <Label htmlFor="surname"> Surname</Label>
+            <Input
+              id="surname"
+              name="surname"
+              value={formData.surname}
               onChange={handleChange}
               placeholder="Durden"
               type="text"
@@ -68,11 +83,11 @@ export default function SignupForm() {
             type="email"
           />
         </LabelInputContainer>
-        {/* <LabelInputContainer className="mb-4">
+        <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
           <Input id="password" placeholder="••••••••" type="password" />
         </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
+        {/* <LabelInputContainer className="mb-8">
           <Label htmlFor="twitterpassword">Your twitter password</Label>
           <Input
             id="twitterpassword"
@@ -92,7 +107,10 @@ export default function SignupForm() {
         <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
         <div className="flex flex-col space-y-4">
-          <button
+          <p>
+            If you already have an account, <Link to="./login">Login</Link>
+          </p>
+          {/* <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             type="submit"
           >
@@ -101,7 +119,7 @@ export default function SignupForm() {
               Google
             </span>
             <BottomGradient />
-          </button>
+          </button> */}
         </div>
       </form>
     </div>
