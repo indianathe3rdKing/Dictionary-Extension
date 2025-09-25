@@ -30,16 +30,20 @@ export default function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setFormData({ name: "", email: "" });
+      setFormData({ name: "", surname: "", email: "", password: "" });
       await userApi.createUser(formData);
       console.log("Form submitted:", formData);
       setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+      setFormData({ name: "", surname: "", email: "", password: "" });
     } catch (error) {
       console.error("Error during sign up:", error);
     }
   };
   return (
-    <div className="shadow-input mx-auto w-[80%] max-w-md overflow-y-hidden rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+    <div className="shadow-input relative mx-auto w-[80%] max-w-md overflow-y-hidden rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       {showAlert && <SubmitAlert />}
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Create your account
@@ -108,7 +112,10 @@ export default function SignupForm() {
 
         <div className="flex flex-col space-y-4">
           <p>
-            If you already have an account, <Link to="./login">Login</Link>
+            If you already have an account,{" "}
+            <Link className="text-blue-500 hover:underline" to="./login">
+              Login
+            </Link>
           </p>
           {/* <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"

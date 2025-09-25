@@ -18,6 +18,17 @@ export const userApi = {
       console.error("Error creating user:", error);
     }
   },
+
+  //Get user for login
+  login: async (email, password) => {
+    try {
+      const response = await api.post("/login", { email, password });
+      return response.data;
+    } catch (error) {
+      console.error("Error logging in:", error);
+      throw new Error("Login failed");
+    }
+  },
   //Get user by id
   getUser: async (userId) => {
     try {
