@@ -15,7 +15,7 @@ export default function SignupForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    surnname: "",
+    surname: "",
     password: "",
   });
   const [showAlert, setShowAlert] = useState(false);
@@ -27,24 +27,32 @@ export default function SignupForm() {
     }));
   };
 
+  let message;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setFormData({ name: "", surname: "", email: "", password: "" });
-      await userApi.createUser(formData);
+      const response = await userApi.createUser(formData);
       console.log("Form submitted:", formData);
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
       }, 3000);
+      // Clear form only after successful submission
       setFormData({ name: "", surname: "", email: "", password: "" });
+      // Set the message for the alert
+      console.log("Signup response message:", response.data.body);
+      const parsed = JSON.parse(response.data.body);
+
+      message = parsed.message;
     } catch (error) {
       console.error("Error during sign up:", error);
     }
   };
   return (
     <div className="shadow-input relative mx-auto w-[80%] max-w-md overflow-y-hidden rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
-      {showAlert && <SubmitAlert />}
+      {showAlert && <SubmitAlert message={message} />}
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Create your account
       </h2>
@@ -89,7 +97,14 @@ export default function SignupForm() {
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="••••••••"
+            type="password"
+          />
         </LabelInputContainer>
         {/* <LabelInputContainer className="mb-8">
           <Label htmlFor="twitterpassword">Your twitter password</Label>

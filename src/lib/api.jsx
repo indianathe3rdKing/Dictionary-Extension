@@ -22,11 +22,15 @@ export const userApi = {
   //Get user for login
   login: async (email, password) => {
     try {
+      console.log("API call to login with:", { email, password });
       const response = await api.post("/login", { email, password });
+      console.log("API response:", response.data);
       return response.data;
     } catch (error) {
       console.error("Error logging in:", error);
-      throw new Error("Login failed");
+      console.error("API error details:", error.response?.data);
+      // Re-throw the original error to preserve error details
+      throw error;
     }
   },
   //Get user by id

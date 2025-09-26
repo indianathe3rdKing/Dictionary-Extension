@@ -1,6 +1,6 @@
 import { CircleCheckIcon } from "lucide-react";
 
-export default function SubmitAlert() {
+export default function SubmitAle({ message }) {
   return (
     <div className="border-eborder rounded-md border px-4 py-3 absolute z-index-100 w-2xs top-4 left-[-20%]  transform translate-x-1/2 bg-white shadow-md">
       <p className="text-sm ">
@@ -9,7 +9,7 @@ export default function SubmitAlert() {
           size={16}
           aria-hidden="true"
         />
-        Completed successfully!
+        {message}
       </p>
     </div>
   );

@@ -6,17 +6,20 @@ import { cn } from "@/lib/utils";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { userApi } from "@/lib/api";
 import SubmitAlert from "../components/submit-alert";
-
-import login from "./login";
+import PasswordInput from "@/components/comp-23";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const handleChange = (e) => {
-    const [name, value] = e.target;
+    const { name, value } = e.target;
+    console.log(e.target.value);
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -25,10 +28,21 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await userApi.login(formData.email, formData.password);
+      console.log("Login attempt with:", {
+        email: formData.email,
+        password: formData.password,
+      });
+      const response = await userApi.login(formData.email, formData.password);
+      console.log("Login response:", response);
+      alert(response.message || "Login successful!");
     } catch (error) {
       console.error("Error during login:", error);
-      throw new Error("Login failed");
+      console.error("Error details:", error.response?.data || error.message);
+      alert(
+        `Login failed: ${
+          error.response?.data?.message || error.message || "Unknown error"
+        }`
+      );
     }
   };
 
@@ -50,16 +64,32 @@ export default function Login() {
               type="email"
             />
           </LabelInputContainer>
-          <LabelInputContainer className="mb-4">
+          <LabelInputContainer className="mb-4 relative *:not-first:mt-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
+              name="password"
               placeholder="••••••••"
-              type="password"
-              value={formData.email}
+              type={isVisible ? "text" : "password"}
+              value={formData.password}
               onChange={handleChange}
             />
+            <button
+              className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+              type="button"
+              onClick={toggleVisibility}
+              aria-label={isVisible ? "Hide password" : "Show password"}
+              aria-pressed={isVisible}
+              aria-controls="password"
+            >
+              {isVisible ? (
+                <EyeOffIcon size={16} aria-hidden="true" />
+              ) : (
+                <EyeIcon size={16} aria-hidden="true" />
+              )}
+            </button>
           </LabelInputContainer>
+
           <button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
             type="submit"
