@@ -14,15 +14,13 @@ export default function PasswordInput(password) {
   return (
     <div className="">
       <Label htmlFor={id}>Show/hide password input</Label>
-        <Input
-          id={id}
-          className="pe-9"
-          value={password}
-          placeholder="Password"
-          type={isVisible ? "text" : "password"}
-        />
-       
-      </div>
+      <Input
+        id={id}
+        className="pe-9"
+        value={password}
+        placeholder="Password"
+        type={isVisible ? "text" : "password"}
+      />
     </div>
   );
 }

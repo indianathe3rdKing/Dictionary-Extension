@@ -44,15 +44,13 @@ export default function SignupForm() {
       // Set the message for the alert
       console.log("Signup response message:", response.data.body);
       const parsed = JSON.parse(response.data.body);
-
-      message = parsed.message;
     } catch (error) {
       console.error("Error during sign up:", error);
     }
   };
   return (
     <div className="shadow-input relative mx-auto w-[80%] max-w-md overflow-y-hidden rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
-      {showAlert && <SubmitAlert message={message} />}
+      {showAlert && <SubmitAlert message={"signup successful!"} />}
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Create your account
       </h2>
